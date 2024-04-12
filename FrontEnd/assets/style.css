@@ -1,0 +1,679 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+    display: block;
+}
+
+body {
+    line-height: 1;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+blockquote,
+q {
+    quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/** end reset css**/
+body {
+    display: flex;
+    flex-direction: column;
+    max-width: 1140px;
+    margin: auto;
+    font-family: 'Work Sans';
+    font-size: 14px;
+    background-color: #FFFEF8;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    margin: 50px 0
+}
+
+section {
+    margin: 50px 0
+}
+
+h1 {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Syne';
+    font-size: 22px;
+    font-weight: 800;
+    color: #B1663C
+}
+
+h1>span {
+    font-family: 'Work Sans';
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    ;
+}
+
+h2 {
+    font-family: 'Syne';
+    font-weight: 700;
+    font-size: 30px;
+    color: #1D6154
+}
+
+nav ul {
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+}
+
+nav li {
+    padding: 0 10px;
+    cursor: pointer;
+}
+
+nav li:hover,
+nav li:focus {
+    color: #B1663C;
+}
+
+nav a {
+    text-decoration: none;
+    color: black;
+}
+
+nav a:hover,
+nav a:focus {
+    color: #B1663C;
+}
+
+ul,
+li {
+    list-style-type: none;
+}
+
+figcaption {
+    padding-top: 2px;
+    font-family: 'Work Sans';
+    font-size: 10px;
+    font-weight: 400;
+}
+
+#login a:hover,
+#login a:focus {
+    color: #B1663C;
+    text-decoration: none;
+}
+
+#introduction {
+    display: flex;
+    align-items: center;
+}
+
+#introduction figure {
+    flex: 1
+}
+
+#introduction img {
+    display: block;
+    margin: auto;
+    width: 80%;
+}
+
+#introduction article {
+    flex: 1
+}
+
+#introduction h2 {
+    margin-bottom: 1em;
+}
+
+#introduction p {
+    margin-bottom: 0.5em;
+}
+
+#portfolio h2 {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0em;
+    margin-top: 3em;
+    gap: 20px;
+}
+
+/************** design banner **************/
+
+.banner {
+    display: flex;
+    justify-content: center;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    padding: 20px 40px;
+    box-sizing: border-box;
+    width: 100vw;
+    background-color: black;
+    color: white;
+}
+
+.banner a {
+    display: flex;
+    position: relative;
+    text-decoration: none;
+}
+
+.banner i {
+    position: absolute;
+    margin-left: -21px;
+}
+
+/************** end design banner **************/
+/************** design modify gallery **************/
+
+.modify {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid transparent;
+    font-size: 14px;
+    background-color: #FFFEF8;
+    cursor: pointer;
+}
+
+.modify:hover,
+.modify:focus {
+    color: #B1663C;
+}
+
+/************** end design modify gallery **************/
+
+/************** design modal **************/
+
+/* First modal */
+
+body.modal-open {
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 10000;
+}
+
+.modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    top: calc(50vh - 340px);
+    left: calc(50vw - 320px);
+    z-index: 1000;
+    margin: 0;
+    border-radius: 10px;
+    width: 640px;
+    height: 680px;
+    background-color: white;
+}
+
+.iconModal {
+    display: flex !important;
+    justify-content: space-between;
+    padding: 26px 30px;
+    width: 90%;
+}
+
+.fa-xmark {
+    align-self: flex-end;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+[id="delete-modal"] .fa-arrow-left {
+    color:white;    
+}
+
+.fa-arrow-left {
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.modal h3 {
+    display: flex;
+    justify-content: center;
+    font-size: 26px;
+}
+
+.modal ul {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin: 50px 100px 30px 100px;
+    column-gap: 10px;
+    row-gap: 20px;
+}
+
+.modal li {
+    width: calc((100% - 60px) / 5);
+    position: relative;
+}
+
+.modal figure {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.modal img {
+    width: 78px;
+    height: 104px;
+}
+
+
+.fa-trash-can {
+    position: absolute;
+    right: 0;
+    top: 4px;
+    border-radius: 2px;
+    padding: 2px;
+    font-size: 9px;
+    color: white;
+    background-color: black;
+    cursor: pointer;
+}
+
+.line {
+    margin-top: 20px;
+    width: 420px;
+    height: 1px;
+    background-color: #B3B3B3;
+    ;
+}
+
+.modal .add-btn {
+    text-align: center;
+    margin-top: 40px;
+    border-radius: 60px;
+    width: 237px;
+    height: 36px;
+    font-family: 'Syne';
+    font-size: 14px;
+    color: white;
+    background-color: #1D6154;
+    cursor: pointer;
+}
+
+/* Second modal */
+
+
+.add-photo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+    border-radius: 3px;
+    gap: 5px;
+    width: 420px;
+    height: 169px;
+    background-color: #E8F1F6;
+}
+
+.add-photo .fa-image {
+    margin-top: 15px;
+    font-size: 76px;
+    color: #B9C5CC;
+    background-color: #E8F1F6;
+}
+
+.add-photo .btn-preview {
+    margin: 0;
+    border-radius: 50px;
+    border: none;
+    padding: 10px;
+    width: 173px;
+    font-size: 14px;
+    color: #306685;
+    background-color: #CBD6DC;
+    font-family: Work Sans;
+    cursor: pointer;
+}
+
+.img-preview img {
+    width: 100%;
+    height: 169px;
+}
+
+.add-photo p {
+    font-size: 10px;
+    padding-bottom: 19px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-family: Work Sans;
+    font-size: 14px;
+    color: #3D3D3D;
+}
+
+form input,
+select {
+    border: 1px solid #B9C5CC;
+    box-sizing: border-box;
+    border-radius: 3px;
+    padding-left: 10px;
+    width: 420px;
+    height: 51px;
+    background-color: white;
+    box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
+}
+
+#submit {
+    align-self: center;
+    text-align: center;
+    margin-top: 20px;
+    border-radius: 60px;
+    border: none;
+    width: 237px;
+    height: 36px;
+    font-family: 'Syne';
+    color: white;
+    cursor: pointer;
+}
+
+/************** end design modal **************/
+/************** design modify gallery **************/
+
+.modify {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position: relative;
+    top: auto;
+
+}
+
+.modify-gallery:hover,
+.modify-gallery:focus {
+    color: #B1663C;
+}
+
+/************** design filters **************/
+
+.filters {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 40px;
+    gap: 20px;
+
+}
+
+.filters li {
+    border: 1px solid #1D6154;
+    border-radius: 60px;
+    padding: 10px;
+    background-color: #FFFEF8;
+    font-size: 16px;
+    color: #1D6154;
+    font-family: Syne;
+    font-size: 16px;
+    ;
+
+    cursor: pointer;
+}
+
+.filters li:hover,
+.filters li:focus {
+    background-color: #1D6154;
+    color: #FFFEF8;
+}
+
+/************** end design filters **************/
+
+.gallery {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+}
+
+.gallery img {
+    width: 100%;
+
+}
+
+#contact,
+#login {
+    width: 50%;
+    margin: auto;
+}
+
+#contact>*,
+#login>* {
+    text-align: center;
+
+}
+
+#contact h2,
+#login h2 {
+    margin-bottom: 20px;
+}
+
+#contact form {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+    gap: 0;
+}
+
+#contact input,
+#login input {
+    height: 50px;
+    font-size: 1.2em;
+    border: none;
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+    
+}
+
+#contact label {
+    margin: 2em 0 1em 0;
+    align-self: flex-start;
+    padding-left: 75px;
+}
+
+#contact textarea {
+    border: none;
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+    width: 410px;
+}
+
+input[type="submit"] {
+    font-family: 'Syne';
+    font-weight: 700;
+    color: white;
+    background-color: #1D6154;
+    margin: 2em auto;
+    width: 40%;
+    text-align: center;
+    border-radius: 60px;
+    cursor: pointer;
+}
+
+/************** login page design **************/
+
+#login form {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+}
+#login label {
+    align-self: flex-start;
+    margin-top: 30px;
+    padding-bottom: 10px;
+    padding-left: 75px;
+}
+
+#login textarea {
+    border: none;
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+    width: 379px;
+}
+
+#login button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    margin-top: 30px;
+    border-radius: 60px;
+    width: 35%;
+    height: 40px;
+    font-family: 'Syne';
+    color: white;
+    background-color: #1D6154;
+    cursor: pointer;
+}
+
+#login a {
+    display: block;
+    margin-top: 25px;
+    color: black;
+    cursor: pointer;
+}
+
+.errorLogin {
+    margin-top: 25px;
+    margin-bottom: -20px;
+    color: red;
+}
+
+footer nav ul {
+    display: flex;
+    justify-content: flex-end;
+    margin: 2em;
+    color: #000;
+}
+
+#footer-login {
+    margin-top: 200px;
+}
