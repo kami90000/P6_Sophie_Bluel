@@ -2,6 +2,7 @@
 
 // !------------------------------------- Constants
 const filters = document.querySelector(".filters");
+const gallery = document.querySelector(".gallery");
 
 // !-------------------------------------- Global variables
 let allWorks = [];
@@ -10,6 +11,8 @@ let select;
 let inputTxt;
 let imgInput;
 let submitButton;
+
+
 // !--------------------------------------- API Functions
 
 /**
@@ -17,7 +20,7 @@ let submitButton;
  *
  * @return {Promise<void>} Returns a promise resolving to undefined.
  */
-const getWorks = async () => {
+async function getWorks() {
   const response = await fetch("http://localhost:5678/api/works");
   allWorks = await response.json();
 };
@@ -54,8 +57,9 @@ const createGalleryItem = (work) => {
   figcaption.classList.add("figcaption");
 
   figure.appendChild(img);
-  listItem.appendChild(figure);
   listItem.appendChild(figcaption);
+  gallery.appendChild(figure);
+
 
   return listItem;
 };
@@ -120,26 +124,7 @@ const createFilters = () => {
   });
 };
 
-// !--------------------------------------- User Functions
-/**
- * Display the user profile by creating a gallery of all their works and
- * adding filters for sorting and filtering the works.
- *
- * @param {array} allWorks - An array of all the user's works.
- */
-const displayUser = () => {
-  createGallery(allWorks);
-  createFilters();
-};
 
-// !--------------------------------------- Admin Functions
-const displayAdmin = () => {
-  createGallery(allWorks);
-  addBanner();
-  removeFilters();
-  addModifyBtn();
-  login();
-};
 
 // !--------------------------------------- Banner Functions
 /**
@@ -361,3 +346,37 @@ const setCreateModal = () => {
     addWork(inputTxt, select, imgInput);
   });
 }
+
+// !--------------------------------------- User Functions
+/**
+ * Display the user profile by creating a gallery of all their works and
+ * adding filters for sorting and filtering the works.
+ *
+ * @param {array} allWorks - An array of all the user's works.
+ */
+const displayUser = async () => {
+  await getWorks();
+  console.log(allWorks)
+  createGallery(allWorks);
+  createFilters();
+};
+
+
+// !--------------------------------------- Admin Functions
+const displayAdmin = () => {
+  console.log (allWorks);  
+  createGallery(allWorks);
+  addBanner();
+  removeFilters();
+  addModifyBtn();
+};
+
+
+function main() {
+  displayUser();
+  displayAdmin();
+
+
+  }
+  main();
+
