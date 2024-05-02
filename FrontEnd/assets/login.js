@@ -1,4 +1,4 @@
-"use strcdct";
+"use strict";
 
 // !----------------------------- Constantes
 const submit = document.getElementById("submit");

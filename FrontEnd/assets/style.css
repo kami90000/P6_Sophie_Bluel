@@ -677,3 +677,8 @@ footer nav ul {
 #footer-login {
     margin-top: 200px;
 }
+
+.hidden {
+    display: none;
+}
+

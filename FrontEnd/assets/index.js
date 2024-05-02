@@ -38,7 +38,7 @@ const getCategories = async () => {
 // !--------------------------------------- Gallery Functions
 
 /**
- * Creates a gallery item element.
+ * Creates a gallery principal.
  *
  * @param {Object} work - The work object.
  * @return {HTMLLIElement} The gallery item element.
@@ -57,34 +57,56 @@ const createGalleryItem = (work) => {
   figcaption.classList.add("figcaption");
 
   figure.appendChild(img);
-  listItem.appendChild(figcaption);
+  figure.appendChild(figcaption);
   gallery.appendChild(figure);
 
 
+  return figure;
+};
+
+/**
+ * Creates a gallery item element for the modal.
+ *
+ * @param {Object} work - The work object.
+ * @return {HTMLLIElement} The gallery item element for the modal.
+ */
+const createModalGalleryItem = (work) => {
+  const listItem = document.createElement("li");
+  const figure = document.createElement("figure");
+  const img = document.createElement("img");
+  const figcaption = document.createElement("figcaption");
+
+  img.src = work.imageUrl;
+  img.alt = work.title;
+  figcaption.textContent = work.title;
+
+  figcaption.classList.add("figcaption");
+
+  figure.appendChild(img);
+  figure.appendChild(figcaption);
+  listItem.appendChild(figure);
+
   return listItem;
 };
+
 
 /**
  * Creates a gallery by adding a new div element with the class "gallery" to the DOM.
  * If an existing gallery already exists, it is removed before creating the new one.
  *
- * @param {Array} gallery - An array of objects representing the gallery items.
+ * @param {Array} galleryItems - An array of objects representing the gallery items.
  */
-const createGallery = (gallery) => {
-  let existingGallery = document.querySelector(".gallery");
-  if (existingGallery) {
-    existingGallery.remove();
-  }
+const createGallery = (galleryItems) => {
+  gallery.innerHTML = "";
+  
 
-  let newGallery = document.createElement("div");
-  newGallery.classList.add("gallery");
+  galleryItems.forEach((work) => {
+    createGalleryItem(work);
 
-  gallery.forEach((work) => {
-    const listItem = createGalleryItem(work);
-    newGallery.appendChild(listItem);
+
   });
 
-  portfolio.appendChild(newGallery);
+
 };
 
 
@@ -124,6 +146,15 @@ const createFilters = () => {
   });
 };
 
+ // Ajoutez la logique pour récupérer les catégories et créer les filtres dynamiquement
+ getCategories().then(categories => {
+  categories.forEach(category => {
+    const li = document.createElement("li");
+    li.id = category.id; // Assurez-vous que l'ID correspond à l'ID de la catégorie
+    li.textContent = category.name;
+    filters.appendChild(li);
+  });
+});
 
 
 // !--------------------------------------- Banner Functions
@@ -188,16 +219,54 @@ const closeModal = () => {
  * 
  */
 const setDeleteModal = () => {
-  const existingModal     = document.querySelector(".modal");
-  const modal             = document.createElement("section");
-  const iconModal         = document.createElement("div");
-  const arrowLeft         = document.createElement("i");
-  const iconClose         = document.createElement("i");
-  const modalList         = document.createElement("ul");
-  const titleModal        = document.createElement("h3");
-  const line              = document.createElement("div");
-  const addImgBtn         = document.createElement("button");
+  const existingModal = document.querySelector(".modal");
+  if (existingModal) {
+    existingModal.remove();
+  }
 
+  const modal = document.createElement("section");
+  modal.classList.add("modal");
+
+// Création de la section "Galerie Photo"
+
+  const gallerySection = document.createElement("section");
+  gallerySection.classList.add("gallery-section");
+  const photoGallery = document.createElement("ul");
+  photoGallery.classList.add("photo-gallery");
+
+  allWorks.forEach((work) => {
+    const listItem = createGalleryItem(work);
+    const figcaption = listItem.querySelector("figcaption");
+    listItem.removeChild(figcaption);
+
+    const deleteIcon = document.createElement("i");
+    deleteIcon.classList.add("fa-solid", "fa-trash-can");
+    deleteIcon.addEventListener("click", () => {
+      deleteWork(work.id);
+      listItem.remove();
+      allWorks = allWorks.filter((item) => item.id !== work.id);
+      createGallery(allWorks);
+    });
+
+    listItem.appendChild(deleteIcon);
+    photoGallery.appendChild(listItem);
+  });
+
+  gallerySection.appendChild(photoGallery);
+  modal.appendChild(gallerySection);
+
+ // Création de la section "Formulaire Ajouter un Travail"
+
+  const formSection = document.createElement("section");
+  formSection.classList.add("form-section", "hidden");
+
+  // Créez votre formulaire ici et ajoutez-le à la section formSection
+
+  modal.appendChild(formSection);
+  
+// Ajoutez la modal au document
+  document.body.classList.add("modal-open");
+  document.body.insertBefore(modal, document.body.firstChild);
 
   allWorks.forEach((work) => {
     const listItem = createGalleryItem(work);
@@ -217,7 +286,7 @@ const setDeleteModal = () => {
       existingModal.remove();
 
     }
-      listItem.appendChild(deleteIcon);
+      listItem.classList.add("hidden");
       modalList.appendChild(listItem);
     
   });
@@ -361,7 +430,6 @@ const displayUser = async () => {
   createFilters();
 };
 
-
 // !--------------------------------------- Admin Functions
 const displayAdmin = () => {
   console.log (allWorks);  
@@ -375,7 +443,6 @@ const displayAdmin = () => {
 function main() {
   displayUser();
   displayAdmin();
-
 
   }
   main();
