@@ -12,7 +12,7 @@ const password = document.getElementById("password");
  * @param {string} token - The token to be saved.
  */
 function saveToken(token) {
-    localStorage.setItem("userToken", token);
+    sessionStorage.setItem("userToken", token);
 }
 
 /**
@@ -38,8 +38,8 @@ function sendId() {
         }
     })
     .then((data) => {
-        const userdata = data.token;
-        saveToken(userdata);
+        const userToken = data.token;
+        saveToken(userToken);
         document.location.href = "index.html";
     })
     .catch((error) => {
