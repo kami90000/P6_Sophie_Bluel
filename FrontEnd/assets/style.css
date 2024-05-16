@@ -443,7 +443,20 @@ body.modal-open {
     cursor: pointer;
 }
 
-
+.add-photo-button {
+    font-family: 'Syne';
+    font-weight: 700;
+    color: white;
+    background-color: #1D6154;
+    margin: 2em auto;
+    width: 40%;
+    text-align: center;
+    border-radius: 60px;
+    cursor: pointer;
+    border: none; 
+    padding: 15px 30px; 
+    font-size: 16px; 
+}
 
 /* Second modal */
 

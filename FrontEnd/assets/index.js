@@ -303,7 +303,7 @@ document.body.insertBefore(modal, document.body.firstChild);
   
 const addPhotoButton = document.createElement("button");
 addPhotoButton.textContent = "Ajouter une photo";
-addPhotoButton.classList.add("add-photo-button"); // Ajoutez une classe pour un style CSS si nécessaire
+addPhotoButton.classList.add("add-photo-button"); 
 addPhotoButton.addEventListener("click", () => {
     // Ajoutez ici la logique pour gérer le clic sur le bouton "Ajouter une photo"
     // Par exemple, ouvrir une autre modal pour ajouter une nouvelle photo
