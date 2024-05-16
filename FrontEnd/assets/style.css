@@ -151,6 +151,8 @@ header {
     margin: 50px 0
 }
 
+
+
 section {
     margin: 50px 0
 }
@@ -341,6 +343,26 @@ body.modal-open {
     cursor: pointer;
 }
 
+.modal .close-button {
+    position: absolute;
+    color: #000000;
+    top: 35px;
+    right: 35px;
+    cursor: pointer;
+    font-size: 16px;
+
+  }
+
+  .modal-title {
+    display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	width: 70%;
+	margin-top: 45px;
+	margin-bottom: 45px;
+  }
+  
+
 [id="delete-modal"] .fa-arrow-left {
     color:white;    
 }
@@ -354,6 +376,11 @@ body.modal-open {
     display: flex;
     justify-content: center;
     font-size: 26px;
+	flex-wrap: wrap;
+	flex-direction: row;
+	width: 70%;
+	margin-top: 45px;
+	margin-bottom: 45px;
 }
 
 .modal ul {
@@ -415,6 +442,8 @@ body.modal-open {
     background-color: #1D6154;
     cursor: pointer;
 }
+
+
 
 /* Second modal */
 
@@ -524,7 +553,7 @@ select {
 
 }
 
-.filters li {
+.filterButton {
     border: 1px solid #1D6154;
     border-radius: 60px;
     padding: 10px;
@@ -538,10 +567,18 @@ select {
     cursor: pointer;
 }
 
-.filters li:hover,
-.filters li:focus {
+.filterButton:hover,
+.filterButton:focus {
     background-color: #1D6154;
     color: #FFFEF8;
+}
+
+
+
+
+.filterButtonActive {
+	color: white;
+	background-color: #1D6154;
 }
 
 /************** end design filters **************/
@@ -681,4 +718,3 @@ footer nav ul {
 .hidden {
     display: none;
 }
-

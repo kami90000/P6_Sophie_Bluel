@@ -12,7 +12,7 @@ let select;
 let inputTxt;
 let imgInput;
 let submitButton;
-
+let modalList;
 
 // !--------------------------------------- API Functions
 
@@ -248,8 +248,28 @@ const setDeleteModal = () => {
     existingModal.remove();
   }
 
-  const modal = document.createElement("section");
+// Création de la modal
+ const modal = document.createElement("section");
   modal.classList.add("modal");
+
+
+ // Ajoutez le bouton pour fermer la modal (la croix)
+ const closeButton = document.createElement("button");
+ closeButton.classList.add("close-button");
+ closeButton.textContent = "X"; // Vous pouvez ajouter un texte ou une icône pour représenter la croix
+ closeButton.addEventListener("click", closeModal); // Ajoutez l'événement pour fermer la modal lors du clic sur la croix
+ modal.appendChild(closeButton);
+ const title = document.createElement("h3");
+title.textContent = "Galerie photo";
+modal.insertBefore(title, closeButton.nextSibling);
+
+
+
+
+// Ajoutez la modal au document
+document.body.classList.add("modal-open");
+document.body.insertBefore(modal, document.body.firstChild);
+
 
   // Création de la section "Galerie Photo"
 
@@ -279,13 +299,38 @@ const setDeleteModal = () => {
   gallerySection.appendChild(photoGallery);
   modal.appendChild(gallerySection);
 
+
+  
+const addPhotoButton = document.createElement("button");
+addPhotoButton.textContent = "Ajouter une photo";
+addPhotoButton.classList.add("add-photo-button"); // Ajoutez une classe pour un style CSS si nécessaire
+addPhotoButton.addEventListener("click", () => {
+    // Ajoutez ici la logique pour gérer le clic sur le bouton "Ajouter une photo"
+    // Par exemple, ouvrir une autre modal pour ajouter une nouvelle photo
+});
+modal.appendChild(addPhotoButton); // Ajoutez le bouton à la modal
+
   // Création de la section "Formulaire Ajouter un Travail"
 
   const formSection = document.createElement("section");
   formSection.classList.add("form-section", "hidden");
 
-  // Créez votre formulaire ici et ajoutez-le à la section formSection
 
+  // Création du formulaire d'ajout de travail
+  const form = document.createElement("form");
+  const addPhoto = document.createElement("div");
+  const iconeImg = document.createElement("i");
+  const labelImg = document.createElement("label");
+  const btnPreview = document.createElement("input");
+  const detailsImg = document.createElement("p");
+  const titleImg = document.createElement("label");
+  const labelCat = document.createElement("label");
+  
+
+
+
+  // Créez votre formulaire ici et ajoutez-le à la section formSection
+  formSection.appendChild(form);
   modal.appendChild(formSection);
 
   // Ajoutez la modal au document
@@ -443,19 +488,19 @@ const setCreateModal = () => {
 // !--------------------------------------- Delete work
 
 const deleteWork = async (Id) => {
-  const token = localStorage.getItem("userToken");
+  
   try {
     const response = await fetch(`http://localhost:5678/api/works/${Id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
+        "Authorization": `Bearer ${tokenUser}`,
       },
     });
 
     if (response.ok) {
       console.log("Le travail a bien été supprimé");
-      createGallery(allWorks);
+      createGallery();
       setDeleteModal();
       return await response.json(); // Retourne les données du travail supprimé si nécessaire
     } else {
@@ -515,6 +560,9 @@ const validateWorkFile = (file) => {
 
   return allowedTypes.has(file.type) && file.size <= maxFileSize;
 };
+
+
+
 
 // !--------------------------------------- Add work
 
@@ -597,8 +645,8 @@ const login = () => {
  */
 const displayUser = async () => {
 
-  createGallery();  
-  createFilters();
+  await createGallery();  
+  await createFilters();
 };
 
 // !--------------------------------------- Admin Functions
@@ -613,8 +661,8 @@ const displayAdmin = () => {
 };
 
 
-function main() {
-  displayUser();
+async function main() {
+  await displayUser();
   displayAdmin();
 
 }
