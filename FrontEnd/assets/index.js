@@ -13,6 +13,8 @@ let inputTxt;
 let imgInput;
 let submitButton;
 let modalList;
+let previouslyFocusedElement = null;
+
 
 // !--------------------------------------- API Functions
 
@@ -98,20 +100,22 @@ const createModalGalleryItem = (work) => {
  *
  * @param {Array} galleryItems - An array of objects representing the gallery items.
  */
-const createGallery = async (categorieId) => {
+const createGallery = async (categorieId = null) => {
   
   allWorks = await getWorks();
   console.log(allWorks)
   
   gallery.innerHTML = "";
-
+  const galleryModal = document.querySelector(".galleryModal");
+  galleryModal.innerHTML = ""; // Modal gallery
 
   allWorks.forEach((work) => {
-   
-
-    if (categorieId == work.category.id || categorieId == null) {
+    if (categorieId == null || categorieId == work.category.id) {
+      // Main gallery
       createGalleryItem(work);
-     }
+      // Modal gallery
+      galleryModal.appendChild(createModalGalleryItem(work));
+    }
 
 
   });
@@ -180,9 +184,6 @@ const createFilters =  async () => {
 
 };
 
-
-
-
 // !--------------------------------------- Banner Functions
 /**
  * Adds a banner to the page.
@@ -212,278 +213,7 @@ const removeFilters = () => {
 
 };
 
-// !--------------------------------------- Modify Button Functions
-const addModifyBtn = () => {
-  const modifyBtn = document.createElement("button");
-  modifyBtn.classList.add("modify");
 
-  const editIcon = document.createElement("i");
-  editIcon.classList.add("fa-regular", "fa-pen-to-square");
-
-  modifyBtn.appendChild(editIcon);
-  modifyBtn.appendChild(document.createTextNode(" modifier"));
-
-  const portfolioTitle = document.getElementById("portfolioTitle");
-  portfolioTitle.appendChild(modifyBtn);
-
-  modifyBtn.addEventListener("click", setDeleteModal);
-};
-
-// !--------------------------------------- Close modal
-const closeModal = () => {
-  const modal = document.querySelector(".modal");
-  modal.remove();
-  document.body.classList.remove("modal-open");
-};
-
-// !--------------------------------------- Modal Functions
-
-/**
- * Sets up the delete modal by creating the necessary DOM elements and attaching event listeners.
- * 
- */
-const setDeleteModal = () => {
-  const existingModal = document.querySelector(".modal");
-  if (existingModal) {
-    existingModal.remove();
-  }
-
-// Création de la modal
- const modal = document.createElement("section");
-  modal.classList.add("modal");
-
-
- // Ajoutez le bouton pour fermer la modal (la croix)
- const closeButton = document.createElement("button");
- closeButton.classList.add("close-button");
- closeButton.textContent = "X"; // Vous pouvez ajouter un texte ou une icône pour représenter la croix
- closeButton.addEventListener("click", closeModal); // Ajoutez l'événement pour fermer la modal lors du clic sur la croix
- modal.appendChild(closeButton);
- const title = document.createElement("h3");
-title.textContent = "Galerie photo";
-modal.insertBefore(title, closeButton.nextSibling);
-
-
-
-
-// Ajoutez la modal au document
-document.body.classList.add("modal-open");
-document.body.insertBefore(modal, document.body.firstChild);
-
-
-  // Création de la section "Galerie Photo"
-
-  const gallerySection = document.createElement("section");
-  gallerySection.classList.add("gallery-section");
-  const photoGallery = document.createElement("ul");
-  photoGallery.classList.add("photo-gallery");
-
-  allWorks.forEach((work) => {
-    const listItem = createGalleryItem(work);
-    const figcaption = listItem.querySelector("figcaption");
-    listItem.removeChild(figcaption);
-
-    const deleteIcon = document.createElement("i");
-    deleteIcon.classList.add("fa-solid", "fa-trash-can");
-    deleteIcon.addEventListener("click", () => {
-      deleteWork(work.id);
-      listItem.remove();
-      allWorks = allWorks.filter((item) => item.id !== work.id);
-      createGallery();
-    });
-
-    listItem.appendChild(deleteIcon);
-    photoGallery.appendChild(listItem);
-  });
-
-  gallerySection.appendChild(photoGallery);
-  modal.appendChild(gallerySection);
-
-
-  
-const addPhotoButton = document.createElement("button");
-addPhotoButton.textContent = "Ajouter une photo";
-addPhotoButton.classList.add("add-photo-button"); 
-addPhotoButton.addEventListener("click", () => {
-    // Ajoutez ici la logique pour gérer le clic sur le bouton "Ajouter une photo"
-    // Par exemple, ouvrir une autre modal pour ajouter une nouvelle photo
-});
-modal.appendChild(addPhotoButton); // Ajoutez le bouton à la modal
-
-  // Création de la section "Formulaire Ajouter un Travail"
-
-  const formSection = document.createElement("section");
-  formSection.classList.add("form-section", "hidden");
-
-
-  // Création du formulaire d'ajout de travail
-  const form = document.createElement("form");
-  const addPhoto = document.createElement("div");
-  const iconeImg = document.createElement("i");
-  const labelImg = document.createElement("label");
-  const btnPreview = document.createElement("input");
-  const detailsImg = document.createElement("p");
-  const titleImg = document.createElement("label");
-  const labelCat = document.createElement("label");
-  
-
-
-
-  // Créez votre formulaire ici et ajoutez-le à la section formSection
-  formSection.appendChild(form);
-  modal.appendChild(formSection);
-
-  // Ajoutez la modal au document
-  document.body.classList.add("modal-open");
-  document.body.insertBefore(modal, document.body.firstChild);
-
-  allWorks.forEach((work) => {
-    const listItem = createGalleryItem(work);
-    const figcaption = listItem.querySelector("figcaption");
-    listItem.removeChild(figcaption);
-
-    const deleteIcon = document.createElement("i");
-    deleteIcon.classList.add("fa-solid", "fa-trash-can");
-    deleteIcon.addEventListener("click", () => {
-      deleteWork(work.id);
-      listItem.remove();
-      allWorks = allWorks.filter(item => item.id !== work.id);
-      createGallery();
-    });
-
-    if (existingModal) {
-      existingModal.remove();
-
-    }
-    listItem.classList.add("hidden");
-    modalList.appendChild(listItem);
-
-  });
-
-  modal.id = "delete-modal";
-  document.body.classList.add("modal-open");
-  modal.classList.add("modal");
-  iconModal.classList.add("iconModal");
-  arrowLeft.classList.add("fa-solid", "fa-arrow-left");
-  iconClose.classList.add("fa-solid", "fa-xmark");
-  addImgBtn.classList.add("add-btn");
-  line.classList.add("line");
-
-  titleModal.textContent = "Galerie Photo";
-  addImgBtn.textContent = "Ajouter une photo";
-
-  portfolio.appendChild(modal);
-  modal.appendChild(iconModal);
-  iconModal.appendChild(arrowLeft);
-  iconModal.appendChild(iconClose);
-  modal.appendChild(titleModal);
-  modal.appendChild(modalList);
-  modal.appendChild(line);
-  modal.appendChild(addImgBtn);
-
-  iconClose.addEventListener("click", closeModal);
-  arrowLeft.addEventListener("click", setDeleteModal);
-  addImgBtn.addEventListener("click", setCreateModal);
-
-};
-/**
- * Sets up the create modal by creating and appending the necessary elements.
- */
-const setCreateModal = () => {
-
-  const modal = document.querySelector(".modal");
-  const titleModal = document.querySelector(".modal h3");
-  const line = document.querySelector(".line");
-
-  const form = document.createElement("form");
-  const addPhoto = document.createElement("div");
-  const iconeImg = document.createElement("i");
-  const labelImg = document.createElement("label");
-  const btnPreview = document.createElement("input");
-  const detailsImg = document.createElement("p");
-  const titleImg = document.createElement("label");
-  const labelCat = document.createElement("label");
-
-  imgInput = document.createElement("input");
-  inputTxt = document.createElement("input");
-  select = document.createElement("select");
-  submitButton = document.createElement("button");
-
-
-  const options = ["Appartements", "Objets", "Hôtels & restaurants"];
-  for (const optionText of options) {
-    const option = document.createElement("option");
-    option.value = options.indexOf(optionText);
-    option.textContent = optionText;
-    select.appendChild(option);
-  }
-
-  titleModal.nextSibling.remove();
-  line.nextElementSibling.remove();
-
-  modal.id = "create-modal";
-  document.body.classList.add("modal-open");
-  iconeImg.classList.add("fa-regular", "fa-image");
-  addPhoto.classList.add("add-photo");
-  btnPreview.classList.add("btn-preview");
-
-  titleModal.textContent = "Ajout photo";
-  detailsImg.textContent = "jpg, png : 4mo max";
-
-  labelImg.htmlFor = "image";
-  imgInput.type = "file";
-  imgInput.id = "image";
-  imgInput.htmlFor = "image";
-  imgInput.accept = ".jpg, .jpeg, .png";
-  imgInput.style.display = "none";
-
-  btnPreview.type = "button";
-  btnPreview.value = "+ Ajouter photo";
-
-  titleImg.id = "label";
-  titleImg.htmlFor = "texte";
-  titleImg.textContent = "Titre";
-  inputTxt.type = "text";
-  inputTxt.id = "texte";
-  inputTxt.name = "texte";
-
-  labelCat.htmlFor = "categorie";
-  labelCat.textContent = "Catégorie";
-  select.id = "categorie";
-  select.name = "categorie";
-
-  submitButton.type = "submit";
-  submitButton.textContent = "Valider";
-  submitButton.id = "submit";
-
-  modal.appendChild(form);
-  form.appendChild(addPhoto);
-  addPhoto.appendChild(iconeImg);
-  addPhoto.appendChild(labelImg);
-  addPhoto.appendChild(imgInput);
-  addPhoto.appendChild(btnPreview);
-  addPhoto.appendChild(detailsImg);
-  form.appendChild(titleImg);
-  form.appendChild(inputTxt);
-  form.appendChild(labelCat);
-  form.appendChild(select);
-  form.appendChild(line);
-  form.appendChild(submitButton);
-
-  imgInput.addEventListener("change", workPreview);
-  btnPreview.addEventListener("click", () => {
-    imgInput.click();
-  });
-
-  inputTxt.addEventListener('input', validateForm);
-  select.addEventListener('input', validateForm);
-  imgInput.addEventListener('input', validateForm);
-
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
-    addWork(inputTxt, select, imgInput);
-  });
-}
 
 // !--------------------------------------- Delete work
 
@@ -501,7 +231,7 @@ const deleteWork = async (Id) => {
     if (response.ok) {
       console.log("Le travail a bien été supprimé");
       createGallery();
-      setDeleteModal();
+      //setDeleteModal();
       return await response.json(); // Retourne les données du travail supprimé si nécessaire
     } else {
       throw new Error("Une erreur est survenue lors de la suppression du travail.");
@@ -588,7 +318,7 @@ const addWork = (inputTxt, select, imgInput) => {
         const newWorkResponse = await res.json();
         allWorks.push(newWorkResponse);
         createGallery(allWorks);
-        setDeleteModal();
+        //setDeleteModal();
       }
     })
     .catch((error) => {
@@ -610,31 +340,181 @@ function validateForm() {
   }
 }
 // !--------------------------------------- Log in
-const login = () => {
+const logout = () => {
   const log = document.getElementById("log");
 
-  const userToken = localStorage.getItem("userToken");
+  const userToken = sessionStorage.getItem("userToken");
 
   if (userToken) {
     log.innerText = "logout";
 
-    log.addEventListener("click", (event) => {
-      localStorage.removeItem("userToken");
-      localStorage.removeItem("userId");
-      log.innerText = "login";
-
-      banner.remove();
-      modifyBtn.remove();
-
-      alert("Vous êtes déconnecté");
+    log.addEventListener("click", (e) => {
+      e.preventDefault();
+      sessionStorage.removeItem("userToken");
+      window.location.href = "index.html";
     });
-  } else {
-    log.innerText = "login";
   }
 };
 
 
+// MODAL
 
+let modal = null
+const focusableSelector = "button, a, input, textarea";
+let focusables = [];
+
+// fonction pour ouvrir la modale
+const openModal = function (e) {
+    e.preventDefault();
+    modal = document.querySelector(e.target.getAttribute("href"));
+    focusables = Array.from(modal.querySelectorAll(focusableSelector));
+    previouslyFocusedElement = document.querySelector(':focus');
+    modal.style.display = null;
+    focusables[0].focus();
+    modal.removeAttribute("aria-hidden");
+    modal.setAttribute("aria-modal", "true");
+    modal.addEventListener("click", closeModal);
+    modal.querySelector(".js-modal-close").addEventListener("click", closeModal);
+    modal.querySelector(".js-modal-stop").addEventListener("click", stopPropagation);
+    
+     // Appeler la fonction pour remplir la galerie modale
+     createGalleryModal();
+};
+
+// Fonction pour remplir la galerie modale
+const createGalleryModal = () => {
+    const galleryModal = document.querySelector(".galleryModal");
+    galleryModal.innerHTML = ""; 
+
+    allWorks.forEach((work) => {
+        // Créer un élément de galerie pour la modal
+        const modalGalleryItem = createModalGalleryItem(work);
+        galleryModal.appendChild(modalGalleryItem);
+    });
+};
+
+
+// fonction pour fermer la modale
+const closeModal = function (e) {
+    if (modal === null) return;
+    if (previouslyFocusedElement !== null) previouslyFocusedElement.focus()
+
+    const modalContent1 = document.querySelector(".modalContent1");
+    const modalContent2 = document.querySelector(".modalContent2");
+    const arrowLeft = document.querySelector(".arrowLeft");
+
+    window.setTimeout(function () {
+        modal.style.display = "none";
+        modal = null;
+        modalContent1.style.display = "flex";
+        modalContent2.style.display = "none";
+        arrowLeft.style.display = "none";
+        // Reset formulaire 
+        resetForm();
+    }, 300);
+
+    modal.setAttribute("aria-hidden", "true");
+    modal.removeAttribute("aria-modal");
+    modal.removeEventListener("click", closeModal);
+    modal.querySelector(".js-modal-close").removeEventListener("click", closeModal);
+    modal.querySelector(".js-modal-stop").removeEventListener("click", stopPropagation);
+
+};
+
+const stopPropagation = function (e) {
+    e.stopPropagation();
+};
+
+// Gérer le focus des éléments dans la modale
+const focusInModal = function (e) {
+    e.preventDefault();
+    let index = focusables.findIndex(f => f === modal.querySelector(":focus"));
+    if (e.shiftKey === true) {
+        index--
+    } else {
+        index++;
+    }
+    if (index >= focusables.length) {
+        index = 0;
+    }
+    if (index < 0) {
+        index = focusables.length - 1
+    }
+    focusables[index].focus();
+    console.log(index);
+};
+
+// Fonction pour changer de fenêtre dans la modale
+function navigateModal() {
+  const buttonModal = document.querySelector(".buttonModal");
+  const modalContent1 = document.querySelector(".modalContent1");
+  const modalContent2 = document.querySelector(".modalContent2");
+  const arrowLeft = document.querySelector(".arrowLeft");
+
+  // Pour aller vers la fenêtre d'ajout de projet
+  buttonModal.addEventListener("click", function () {
+      modalContent1.style.display = "none";
+      modalContent2.style.display = "flex";
+      arrowLeft.style.display = "flex";
+      buttonFormCheck();
+  });
+
+  // Pour aller vers la fenêtre de la gallerie de la modale
+  arrowLeft.addEventListener("click", function () {
+      modalContent1.style.display = "flex";
+      modalContent2.style.display = "none";
+      arrowLeft.style.display = "none";
+      resetForm()
+  });
+};
+
+// Fonction pour reset le formulaire ajout image
+function resetForm() {
+  const form = document.getElementById("formModal");
+  form.reset();
+
+  const imageFile = document.querySelector(".imageFile");
+  const inputFile = document.getElementById("photoInput");
+  const iconDelete = document.querySelector(".iconDelete");
+  const logoPhoto = document.querySelector(".logoPhoto");
+  const btnPhotoInput = document.querySelector(".btnPhotoInput");
+  const photoInputTxt = document.querySelector(".photoInputTxt");
+  const errorImg = document.querySelector(".errorImg");
+
+  logoPhoto.style.display = "flex";
+  btnPhotoInput.style.display = "flex";
+  photoInputTxt.style.display = "flex";
+  errorImg.style.display = "flex";
+  iconDelete.style.display = "none";
+
+  if (imageFile) {
+      imageFile.remove();
+  };
+
+  inputFile.value = "";
+  errorImg.textContent = "";
+};
+
+// Fonction pour activé ou désactivé le boutton de formulaire en fonction des champs remplis
+
+function buttonFormCheck() {
+  const titleWork = document.getElementById("title");
+  const select = document.getElementById("category");
+  const inputFile = document.getElementById("photoInput");
+  const buttonValidate = document.getElementById("buttonValidate");
+
+
+  if (titleWork.value !== "" && select.value !== "" && inputFile.files.length > 0) {
+      buttonValidate.disabled = false;
+      buttonValidate.style.backgroundColor = "#1d6154";
+      console.log("formulaire ok");
+  } else {
+      buttonValidate.disabled = true;
+      buttonValidate.style.backgroundColor = "#a7a7a7";
+      console.log("formulaire incomplet");
+  };
+
+};
 
 // !--------------------------------------- User Functions
 /**
@@ -655,7 +535,38 @@ const displayAdmin = () => {
   if (tokenUser) {
     addBanner();
     removeFilters();
-    addModifyBtn();
+
+
+    // Modification de la margin sous le h2 'Mes Projets' 
+    const portfolioTitle = document.querySelector(".portfolioTitle");
+    //portfolioTitle.style.marginBottom = "90px";
+
+    // Ajout du bouton modifier
+    const boutonEdit = document.createElement("a");
+    boutonEdit.innerHTML = '<i class="fa-regular fa-pen-to-square"></i>' + "modifier";
+    boutonEdit.href = "#modal1";
+    boutonEdit.classList.add("editBouton", "js-modal")
+    portfolioTitle.appendChild(boutonEdit)
+
+
+    document.querySelectorAll(".js-modal").forEach((a) => {
+      a.addEventListener("click", openModal);
+    });
+    
+    window.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" || e.key === "Esc") {
+            closeModal(e);
+        }
+        if (e.key === "Tab" && modal !== null) {
+            focusInModal(e);
+        }
+    });
+
+    
+
+    navigateModal();
+    //addModifyBtn();
+    logout();
   }
 
 };
