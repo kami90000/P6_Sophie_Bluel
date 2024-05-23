@@ -412,13 +412,13 @@ body.modal-open {
 
 .fa-trash-can {
     position: absolute;
-    right: 0;
-    top: 4px;
-    border-radius: 2px;
-    padding: 2px;
-    font-size: 9px;
-    color: white;
+    top: 5px; /* Ajustez la valeur en fonction de la position verticale désirée */
+    right: 5px; /* Ajustez la valeur en fonction de la position horizontale désirée */
     background-color: black;
+    color: white;
+    font-size: 12px;
+    padding: 4px;
+    border-radius: 50%;
     cursor: pointer;
 }
 

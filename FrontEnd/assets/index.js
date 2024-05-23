@@ -78,16 +78,23 @@ const createModalGalleryItem = (work) => {
   const listItem = document.createElement("li");
   const figure = document.createElement("figure");
   const img = document.createElement("img");
-  const figcaption = document.createElement("figcaption");
+
+// Crée une icône de corbeille
+const trashIcon = document.createElement("i");
+trashIcon.classList.add("fas", "fa-trash-alt", "delete-icon");
+
+// Ajoute un événement de clic à l'icône de corbeille pour supprimer le travail
+trashIcon.addEventListener("click", () => {
+  deleteWork(work.id); // Appelle la fonction de suppression avec l'ID approprié
+});
+
 
   img.src = work.imageUrl;
   img.alt = work.title;
-  figcaption.textContent = work.title;
-
-  figcaption.classList.add("figcaption");
+ 
 
   figure.appendChild(img);
-  figure.appendChild(figcaption);
+  figure.appendChild(trashIcon);
   listItem.appendChild(figure);
 
   return listItem;
