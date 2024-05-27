@@ -196,7 +196,7 @@ nav li:focus {
     color: #B1663C;
 }
 
-nav a {
+ a {
     text-decoration: none;
     color: black;
 }
@@ -264,11 +264,10 @@ figcaption {
 .banner {
     display: flex;
     justify-content: center;
-    margin-left: calc(-50vw + 50%);
-    margin-right: calc(-50vw + 50%);
+   
     padding: 20px 40px;
     box-sizing: border-box;
-    width: 100vw;
+    width: 100%;
     background-color: black;
     color: white;
 }
@@ -393,7 +392,7 @@ body.modal-open {
 }
 
 .modal li {
-    width: calc((100% - 60px) / 5);
+    width: 100% ;
     position: relative;
 }
 
@@ -410,24 +409,28 @@ body.modal-open {
 }
 
 
-.fa-trash-can {
-    position: absolute;
-    top: 5px; /* Ajustez la valeur en fonction de la position verticale désirée */
-    right: 5px; /* Ajustez la valeur en fonction de la position horizontale désirée */
-    background-color: black;
-    color: white;
-    font-size: 12px;
-    padding: 4px;
-    border-radius: 50%;
-    cursor: pointer;
+.delete-icon {
+   position: absolute;
+   top:8px;
+   right: 6px;
+   cursor: pointer;
+   background-color: black;
+   color:white;
+   font-size: 9px;
+   border-radius: 2px;
+    padding: 2px;
+  
+    
 }
+
+
 
 .line {
     margin-top: 20px;
     width: 420px;
     height: 1px;
     background-color: #B3B3B3;
-    ;
+    
 }
 
 .modal .add-btn {
@@ -966,13 +969,7 @@ footer nav ul {
 	object-fit: contain;
 }
 
-.iconDelete {
-	position: absolute;
-	display: none;
-	right: 20px;
-	top: 20px;
-	cursor: pointer;
-}
+
 
 .errorImg {
 	color: red;
@@ -997,3 +994,4 @@ footer nav ul {
 	from { transform: translateY(0px);}
 	to { transform: translateY(50px);}
 }
+

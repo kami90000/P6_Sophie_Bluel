@@ -239,13 +239,13 @@ const deleteWork = async (Id) => {
       console.log("Le travail a bien été supprimé");
       createGallery();
       //setDeleteModal();
-      return await response.json(); // Retourne les données du travail supprimé si nécessaire
+     // return await response.json(); // Retourne les données du travail supprimé si nécessaire
     } else {
       throw new Error("Une erreur est survenue lors de la suppression du travail.");
     }
   } catch (error) {
     console.error("Une erreur est survenue lors de la suppression du travail :", error);
-    throw error; // Lance une exception pour une gestion des erreurs améliorée
+
   }
 };
 
@@ -384,8 +384,7 @@ const openModal = function (e) {
     modal.querySelector(".js-modal-close").addEventListener("click", closeModal);
     modal.querySelector(".js-modal-stop").addEventListener("click", stopPropagation);
     
-     // Appeler la fonction pour remplir la galerie modale
-     createGalleryModal();
+     
 };
 
 // Fonction pour remplir la galerie modale
