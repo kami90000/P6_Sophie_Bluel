@@ -182,14 +182,19 @@ const createFilters =  async () => {
         createGallery(categorieId);
        
       });
+ });
 
- 
-
-  });
-
-
+ // Créez dynamiquement les options de catégorie dans le champ select de la modal d'ajout de photo
+ const selectModal = document.getElementById("category");
+ allCategories.forEach(category => {
+   const option = document.createElement("option");
+   option.value = category.id;
+   option.textContent = category.name;
+   selectModal.appendChild(option);
+ });
 
 };
+
 
 // !--------------------------------------- Banner Functions
 /**
@@ -582,5 +587,7 @@ async function main() {
   await displayUser();
   displayAdmin();
 
+
+  
 }
 main();
