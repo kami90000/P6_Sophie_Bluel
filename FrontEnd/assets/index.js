@@ -196,6 +196,7 @@ const createFilters =  async () => {
 };
 
 
+
 // !--------------------------------------- Banner Functions
 /**
  * Adds a banner to the page.
@@ -581,6 +582,73 @@ const displayAdmin = () => {
   }
 
 };
+document.addEventListener('DOMContentLoaded', () => {
+  const photoInput = document.getElementById('photoInput');
+  const logoPhoto = document.querySelector('.logoPhoto');
+  const btnPhotoInput = document.querySelector('.btnPhotoInput');
+  const photoInputTxt = document.querySelector('.photoInputTxt');
+  const previewContainer = document.getElementById('previewContainer');
+  const previewImage = document.getElementById('previewImage');
+
+  photoInput.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        // Affiche l'image de prévisualisation
+        previewImage.src = e.target.result;
+        previewContainer.style.display = 'flex';
+
+
+        // Masque les éléments par défaut
+        logoPhoto.style.display = 'none';
+        btnPhotoInput.style.display = 'none';
+        photoInputTxt.style.display = 'none';
+      };
+
+      reader.readAsDataURL(file);
+    }
+  });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const titleInput = document.getElementById('title');
+  const categorySelect = document.getElementById('category');
+  const photoInput = document.getElementById('photoInput');
+  const submitButton = document.getElementById('buttonValidate');
+
+   // Fonction pour valider les champs du formulaire
+   function validerFormulaire() {
+    const titre = titleInput.value.trim();
+    const categorie = categorySelect.value;
+    const image = photoInput.files.length > 0;
+
+    // Vérifie si tous les champs sont remplis
+    if (titre !== "" && categorie !== "" && image) {
+      // Active le bouton "Valider"
+      submitButton.disabled = false;
+      submitButton.style.backgroundColor = "#1D6154";
+      submitButton.style.cursor = "pointer";
+    } else {
+      // Désactive le bouton "Valider"
+      submitButton.disabled = true;
+      submitButton.style.backgroundColor = "#A7A7A7";
+      submitButton.style.cursor = "auto";
+    }
+  }
+
+ // Écouteurs d'événements pour les champs de saisie et de sélection
+  titleInput.addEventListener('blur', validerFormulaire);
+  categorySelect.addEventListener('blur', validerFormulaire);
+  photoInput.addEventListener('change', validerFormulaire);
+
+  // Assurez-vous que le bouton "Valider" est désactivé initialement
+  validerFormulaire();
+});
+
+
+
 
 
 async function main() {

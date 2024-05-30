@@ -57,8 +57,7 @@
         <!--Partie modale-->
         <aside id="modal1" class="modal" aria-hidden="true" style="display: none">
           <div class="modal-wrapper js-modal-stop">
-            <button class="arrowLeft">
-              <i class="fa-solid fa-arrow-left fa-xl"></i>
+            
             </button>
             <button class="js-modal-close">
               <i class="fa-solid fa-xmark fa-xl"></i>
@@ -85,6 +84,9 @@
                   <input type="file" id="photoInput" name="image" accept=".png, .jpeg">
                   <p class="photoInputTxt">jpg, png : 4mo max</p>
                   <p class="errorImg"></p>
+                  <figure id="previewContainer" style="display: none;">
+                    <img id="previewImage" alt="Prévisualisation" />
+                  </figure>
                 </div>
                 <label for="title" class="formLabel">Titre</label>
                 <input type="text" id="title" name="title" class="formSize">
