@@ -5,6 +5,8 @@ const submit = document.getElementById("submit");
 const email = document.getElementById("email");
 const password = document.getElementById("password");
 
+
+const formLogin = document.getElementById("formLogin");
 // !----------------------------- Functions
 /**
  * Saves the provided token to the user's local storage.
@@ -48,11 +50,10 @@ function sendId() {
 }
 
 // !----------------------------- Événement
-submit.addEventListener("click", (event) => {
+formLogin.addEventListener("submit", (event) => {
     event.preventDefault();
     sendId();
 });
-
 
 
 

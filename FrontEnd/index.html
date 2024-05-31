@@ -52,58 +52,60 @@
       </article>
     </section>
     <section id="portfolio">
-      
-        <h2 class="portfolioTitle">Mes Projets</h2>
-        <!--Partie modale-->
-        <aside id="modal1" class="modal" aria-hidden="true" style="display: none">
-          <div class="modal-wrapper js-modal-stop">
-            
-            </button>
-            <button class="js-modal-close">
-              <i class="fa-solid fa-xmark fa-xl"></i>
-            </button>
-            <div class="modalContent1">
-              <h2 class="title-modal">
-                Galerie photo
-              </h2>
-              <div class="galleryModal"></div>
-              <div class="line"></div>
-              <button class="buttonModal">Ajouter des photos</button>
-            </div>
-            <div class="modalContent2">
-              <h2 class="title-modal">
-                Ajout photo
-              </h2>
-              <form action="#" method="post" enctype="multipart/form-data" id="formModal">
-                <div class="addPhoto">
-                  <div class="iconDelete">
-                    <i class="fa-solid fa-xmark fa-xl"></i>
-                  </div>
-                  <i class="fa-regular fa-image logoPhoto"></i>
-                  <label for="photoInput" class="btnPhotoInput">+ Ajouter photo</label>
-                  <input type="file" id="photoInput" name="image" accept=".png, .jpeg">
-                  <p class="photoInputTxt">jpg, png : 4mo max</p>
-                  <p class="errorImg"></p>
-                  <figure id="previewContainer" style="display: none;">
-                    <img id="previewImage" alt="Prévisualisation" />
-                  </figure>
-                </div>
-                <label for="title" class="formLabel">Titre</label>
-                <input type="text" id="title" name="title" class="formSize">
-                <label for="category" class="formLabel "> Catégorie</label>
-                <select id="category" name="category" class="formSize">
-                  <option value="">Veuillez sélectionner une catégorie</option>
-                </select>
-                <div class="line"></div>
-                <button type="submit" id="buttonValidate">Valider</button>
-              </form>
 
+      <h2 class="portfolioTitle">Mes Projets</h2>
+      <!--Partie modale-->
+      <aside id="modal1" class="modal" aria-hidden="true" style="display: none">
+        <div class="modal-wrapper js-modal-stop">
 
-            </div>
+          <button class="arrowLeft">
+            <i class="fa-solid fa-arrow-left fa-xl"></i>
+          </button>
+          <button class="js-modal-close">
+            <i class="fa-solid fa-xmark fa-xl"></i>
+          </button>
+          <div class="modalContent1">
+            <h2 class="title-modal">
+              Galerie photo
+            </h2>
+            <div class="galleryModal"></div>
+            <div class="line"></div>
+            <button class="buttonModal">Ajouter des photos</button>
           </div>
-        </aside>
-        <!--Fin partie modale-->
-     
+          <div class="modalContent2">
+            <h2 class="title-modal">
+              Ajout photo
+            </h2>
+            <form action="#" method="post" enctype="multipart/form-data" id="formModal">
+              <div class="addPhoto">
+                <!--<div class="iconDelete">
+                    <i class="fa-solid fa-xmark fa-xl"></i>
+                  </div>-->
+                <i class="fa-regular fa-image logoPhoto"></i>
+                <label for="photoInput" class="btnPhotoInput">+ Ajouter photo</label>
+                <input type="file" id="photoInput" name="image" accept=".png, .jpeg">
+                <p class="photoInputTxt">jpg, png : 4mo max</p>
+                <p class="errorImg"></p>
+                <figure id="previewContainer" style="display: none;">
+                  <img id="previewImage" alt="Prévisualisation" />
+                </figure>
+              </div>
+              <label for="title" class="formLabel">Titre</label>
+              <input type="text" id="title" name="title" class="formSize">
+              <label for="category" class="formLabel "> Catégorie</label>
+              <select id="category" name="category" class="formSize">
+                <option value="">Veuillez sélectionner une catégorie</option>
+              </select>
+              <div class="line"></div>
+              <button type="submit" id="buttonValidate">Valider</button>
+            </form>
+
+
+          </div>
+        </div>
+      </aside>
+      <!--Fin partie modale-->
+
 
       <ul class="filters">
         <li class="filterButton filterButtonActive" id="0">Tous</li>
