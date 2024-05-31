@@ -254,8 +254,8 @@ figcaption {
 #portfolio h2 {
     display: flex;
     justify-content: center;
-    margin-bottom: 0em;
-    margin-top: 3em;
+    margin-bottom: 47px;
+    margin-top: 10px;
     gap: 20px;
 }
 
@@ -411,14 +411,14 @@ body.modal-open {
 
 .delete-icon {
    position: absolute;
-   top:8px;
-   right: 6px;
+   top:5px;
+   right: 7px;
    cursor: pointer;
    background-color: black;
    color:white;
-   font-size: 9px;
+   font-size: 11px;
    border-radius: 2px;
-    padding: 2px;
+    padding: 4px;
   
     
 }
