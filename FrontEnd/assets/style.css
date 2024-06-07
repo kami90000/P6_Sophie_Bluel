@@ -196,6 +196,11 @@ nav li:focus {
     color: #B1663C;
 }
 
+a.edit-link {
+    color: white !important; /* Utilisation de !important pour forcer la priorité */
+}
+
+
  a {
     text-decoration: none;
     color: black;

@@ -207,6 +207,7 @@ const addBanner = () => {
 
   const bannerTxt = document.createElement("a");
   bannerTxt.innerText = "Mode édition";
+  bannerTxt.classList.add("edit-link"); 
 
   const editIcon = document.createElement("i");
   editIcon.classList.add("fa-regular", "fa-pen-to-square");
