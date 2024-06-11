@@ -1,11 +1,11 @@
 "use strict";
 
-// !------------------------------------- Constants
+// !------------------------------------- Constantes
 const filters = document.querySelector(".filters");
 const gallery = document.querySelector(".gallery");
 const tokenUser = sessionStorage.getItem("userToken");
 
-// !-------------------------------------- Global variables
+// !-------------------------------------- variables globales
 let allWorks = [];
 let allCategories = [];
 let select;
@@ -16,12 +16,12 @@ let modalList;
 let previouslyFocusedElement = null;
 
 
-// !--------------------------------------- API Functions
+// !--------------------------------------- fonctions API
 
 /**
- * Retrieves all works from the API.
+ *  Récupère toutes les œuvres depuis l'API.
  *
- * @return {Promise<void>} Returns a promise resolving to undefined.
+ * @return {Promise<void>} Retourne une promesse résolue une fois les œuvres récupérées.
  */
 async function getWorks() {
   const response = await fetch("http://localhost:5678/api/works");
@@ -30,22 +30,22 @@ async function getWorks() {
 };
 
 /**
- * Retrieves the categories from the API.
+ * Récupère les catégories depuis l'API.
  *
- * @return {Promise<void>} A promise that resolves once the categories are retrieved.
+ * @return {Promise<void>}  Retourne une promesse résolue une fois les catégories récupérées.
  */
 const getCategories = async () => {
   const response = await fetch("http://localhost:5678/api/categories");
   return response.json();
 };
 
-// !--------------------------------------- Gallery Functions
+// !--------------------------------------- Fonctions Galerie
 
 /**
- * Creates a gallery principal.
+ * Crée un élément de galerie principal.
  *
- * @param {Object} work - The work object.
- * @return {HTMLLIElement} The gallery item element.
+ * @param {Object} work -  L'objet représentant une œuvre.
+ * @return {HTMLLIElement}  L'élément de la galerie.
  */
 const createGalleryItem = (work) => {
 
@@ -69,10 +69,10 @@ const createGalleryItem = (work) => {
 };
 
 /**
- * Creates a gallery item element for the modal.
+  * Crée un élément de galerie pour la modale.
  *
- * @param {Object} work - The work object.
- * @return {HTMLLIElement} The gallery item element for the modal.
+ * @param {Object} work - L'objet représentant une œuvre.
+ * @return {HTMLLIElement} L'élément de la galerie pour la modale.
  */
 const createModalGalleryItem = (work) => {
   const listItem = document.createElement("li");
@@ -102,26 +102,30 @@ const createModalGalleryItem = (work) => {
 
 
 /**
- * Creates a gallery by adding a new div element with the class "gallery" to the DOM.
- * If an existing gallery already exists, it is removed before creating the new one.
- *
- * @param {Array} galleryItems - An array of objects representing the gallery items.
+  * Crée une galerie en ajoutant un nouvel élément div avec la classe "gallery" au DOM.
+ * Si une galerie existante existe déjà, elle est supprimée avant de créer la nouvelle.
+ 
+ * @param {Array} galleryItems -  Un tableau d'objets représentant les éléments de la galerie.
  */
+// Fonction pour créer la galerie des œuvres
 const createGallery = async (categorieId = null) => {
-
+ // Récupération de toutes les œuvres depuis l'API
   allWorks = await getWorks();
   console.log(allWorks)
-
+  // Effacement du contenu existant de la galerie
   gallery.innerHTML = "";
   const galleryModal = document.querySelector(".galleryModal");
-  galleryModal.innerHTML = ""; // Modal gallery
+  galleryModal.innerHTML = ""; 
 
+  // Parcours de toutes les œuvres
   allWorks.forEach((work) => {
+     // Vérifie si la catégorie est spécifiée et si l'œuvre appartient à cette catégorie
     if (categorieId == null || categorieId == work.category.id) {
-      // Main gallery
-      createGalleryItem(work);
-      // Modal gallery
-      galleryModal.appendChild(createModalGalleryItem(work));
+        // Crée un élément de galerie pour chaque œuvre
+     
+      createGalleryItem(work);// Créer un élément de galerie
+
+      galleryModal.appendChild(createModalGalleryItem(work));// Ajouter à la modale
     }
 
 
@@ -131,54 +135,43 @@ const createGallery = async (categorieId = null) => {
 };
 
 
-// !--------------------------------------- Filters Functions
+// !---------------------------------------  Fonctions Filtre
 
 /**
- * Filters works by category and updates the gallery.
+  * Crée les filtres et ajoute des écouteurs d'événements de clic.
  *
- * @param {string} categoryId - The category ID.
+ * @param {string} categoryId 
  */
-/*const filterCategory = (categoryId) => {
-  if (allWorks.length === 0) {
-    return;
-  }
-
-  const filteredGallery = categoryId === "0"
-    ? allWorks
-    : allWorks.filter(work => work.categoryId == categoryId);
-
-  createGallery(filteredGallery);
-};*/
-
-/**
- * Creates filters and adds click event listeners.
- */
+// Création des filtres
 const createFilters = async () => {
-
-  allCategories = await getCategories();
+   // Récupère toutes les catégories depuis l'API
+allCategories = await getCategories();
 
   // Ajoutez la logique pour récupérer les catégories et créer les filtres dynamiquement
 
+  // Pour chaque catégorie, crée un élément de filtre
   allCategories.forEach(category => {
     const li = document.createElement("li");
-    li.id = category.id; // Assurez-vous que l'ID correspond à l'ID de la catégorie
+    li.id = category.id; // Assure que l'ID correspond à l'ID de la catégorie
     li.textContent = category.name;
     li.classList.add("filterButton");
     filters.appendChild(li);
   });
 
-
+ // Sélectionne tous les filtres (éléments <li>) pour ajouter des écouteurs d'événements
   const allFilters = document.querySelectorAll(".filters li")
   allFilters.forEach(filter => {
 
 
-
+   // Ajoute un écouteur d'événement de clic à chaque filtre
     filter.addEventListener("click", function () {
       let categorieId = filter.getAttribute("id");
+
+       // Supprime la classe active de tous les filtres et l'ajoute au filtre cliqué
       allFilters.forEach((filter) => filter.classList.remove("filterButtonActive"));
       filter.classList.add("filterButtonActive");
 
-
+ // Recrée la galerie avec les éléments correspondant à la catégorie sélectionnée
       createGallery(categorieId);
 
     });
@@ -197,9 +190,9 @@ const createFilters = async () => {
 
 
 
-// !--------------------------------------- Banner Functions
+// !--------------------------------------- Fonctions Bannière
 /**
- * Adds a banner to the page.
+ * Ajoute une bannière à la page.
  */
 const addBanner = () => {
   const banner = document.createElement("div");
@@ -217,9 +210,10 @@ const addBanner = () => {
   document.body.insertBefore(banner, document.body.firstChild);
 };
 
-// !--------------------------------------- Remove Filters
+// !--------------------------------------- Suppression des Filtres
+
 /**
- * Removes filters from the page.
+  * Supprime les filtres de la page.
  */
 const removeFilters = () => {
 
@@ -229,7 +223,7 @@ const removeFilters = () => {
 
 
 
-// !--------------------------------------- Delete work
+// !--------------------------------------- Suppression de work
 
 const deleteWork = async (Id) => {
 
@@ -245,8 +239,7 @@ const deleteWork = async (Id) => {
     if (response.ok) {
       console.log("Le travail a bien été supprimé");
       createGallery();
-      //setDeleteModal();
-      // return await response.json(); // Retourne les données du travail supprimé si nécessaire
+  
     } else {
       throw new Error("Une erreur est survenue lors de la suppression du travail.");
     }
@@ -256,7 +249,10 @@ const deleteWork = async (Id) => {
   }
 };
 
-// !--------------------------------------- Preview work
+// !--------------------------------------- Aperçu d'un work
+
+// Affiche un aperçu de l'image sélectionnée.
+
 function displayPreview(file) {
   const previewContainer = document.querySelector(".add-photo");
   const previewImg = document.createElement("figure");
@@ -273,9 +269,9 @@ function displayPreview(file) {
 }
 
 /**
- * Generates a preview of a work based on the selected file.
+ * Génère un aperçu de l'œuvre basée sur le fichier sélectionné.
  *
- * @param {Event} event - The event object triggered by the user action.
+ * @param {Event} event - L'objet événement déclenché par l'action de l'utilisateur.
  */
 function workPreview(event) {
   const fileInput = event.target;
@@ -293,10 +289,10 @@ function workPreview(event) {
 }
 
 /**
- * Validates if a given file is a valid work file.
+ *  Valide si un fichier donné est un fichier d'œuvre valide.
  *
- * @param {Object} file - The file object to be validated.
- * @return {boolean} Returns true if the file is a valid work file, otherwise returns false.
+ * @param {Object} file -  L'objet fichier à valider.
+ * @return {boolean} Retourne true si le fichier est valide, sinon retourne false.
  */
 const validateWorkFile = (file) => {
   const allowedTypes = new Set(["image/jpeg", "image/jpg", "image/png"]);
@@ -308,16 +304,17 @@ const validateWorkFile = (file) => {
 
 
 
-// !--------------------------------------- Add work
+// !--------------------------------------- Ajout work
 
-const addWork = (inputTxt, select, imgInput) => {
-  const formData = new FormData();
-  formData.append("title", inputTxt.value);
-  formData.append("category", select.value);
-  formData.append("image", imgInput.files[0]);
+const addWork = (inputTxt, select, imgInput) => { // Crée un nouvel objet FormData pour contenir les données du formulaire
+  const formData = new FormData();            
+  formData.append("title", inputTxt.value);  // Ajoute le titre du projet à l'objet FormData
+  formData.append("category", select.value);   // Ajoute la catégorie du projet à l'objet FormData
+  formData.append("image", imgInput.files[0]); // Ajoute le fichier image du projet à l'objet FormData
 
-  const token = localStorage.getItem("userToken");
+  const token = localStorage.getItem("userToken");  // Récupère le token utilisateur depuis le stockage local 
 
+  // Envoie une requête POST à l'API pour ajouter le nouveau projet
   fetch("http://localhost:5678/api/works", {
     method: "POST",
     headers: {
@@ -326,13 +323,15 @@ const addWork = (inputTxt, select, imgInput) => {
     body: formData,
   })
     .then(async (res) => {
+        // Si la réponse est positive, avertit l'utilisateur et met à jour la galerie
       if (res.ok) {
         alert("Le travail a bien été ajouté");
 
+  // Parse la réponse pour récupérer le nouveau projet ajouté
         const newWorkResponse = await res.json();
-        allWorks.push(newWorkResponse);
-        createGallery(allWorks);
-        //setDeleteModal();
+        allWorks.push(newWorkResponse);// Ajouter l'œuvre à la liste
+        createGallery(allWorks);// Mettre à jour la galerie
+
       }
     })
     .catch((error) => {
@@ -541,10 +540,10 @@ function addWorks() {
 // Fonction pour activé ou désactivé le boutton de formulaire en fonction des champs remplis
 
 function buttonFormCheck() {
-  const titleWork = document.getElementById("title");
-  const select = document.getElementById("category");
-  const inputFile = document.getElementById("photoInput");
-  const buttonValidate = document.getElementById("buttonValidate");
+  const titleWork = document.getElementById("title");//champ de saisie du titre 
+  const select = document.getElementById("category"); //Le menu déroulant de sélection de catégorie avec l'ID "category".
+  const inputFile = document.getElementById("photoInput"); //Le champ de saisie de fichier avec l'ID "photoInput".
+  const buttonValidate = document.getElementById("buttonValidate");// Le bouton de validation avec l'ID "buttonValidate"
 
 
   if (titleWork.value !== "" && select.value !== "" && inputFile.files.length > 0) {
@@ -580,14 +579,14 @@ function resetForm() {
   btnPhotoInput.style.display = "flex";
   photoInputTxt.style.display = "flex";
   errorImg.style.display = "flex";
-  //  iconDelete.style.display = "none";
+ 
   previewContainer.style.display = "none";
 
   if (imageFile) {
     imageFile.remove();
   };
 
-  //inputFile.value = "";
+
   errorImg.textContent = "";
 };
 
@@ -611,14 +610,11 @@ const displayUser = async () => {
 const displayAdmin = () => {
 
   if (tokenUser) {
-    addBanner();
-    removeFilters();
+    addBanner(); // Ajouter une bannière d'édition
+    removeFilters();// Masquer les filtres
 
-
-    // Modification de la margin sous le h2 'Mes Projets' 
-    const portfolioTitle = document.querySelector(".portfolioTitle");
-    //portfolioTitle.style.marginBottom = "90px";
-
+  const portfolioTitle = document.querySelector(".portfolioTitle");
+  
     // Ajout du bouton modifier
     const boutonEdit = document.createElement("a");
     boutonEdit.innerHTML = '<i class="fa-regular fa-pen-to-square"></i>' + "modifier";
@@ -626,7 +622,7 @@ const displayAdmin = () => {
     boutonEdit.classList.add("editBouton", "js-modal")
     portfolioTitle.appendChild(boutonEdit)
 
-
+    // Ajouter des événements pour ouvrir la modale
     document.querySelectorAll(".js-modal").forEach((a) => {
       a.addEventListener("click", openModal);
     });
@@ -640,11 +636,8 @@ const displayAdmin = () => {
       }
     });
 
-
-
-    navigateModal();
-    //addModifyBtn();
-    logout();
+navigateModal();
+logout();
   }
 
 };
